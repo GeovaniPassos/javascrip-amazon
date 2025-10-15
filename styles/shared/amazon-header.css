@@ -1,0 +1,30 @@
+.amazon-header {
+    background-color: rgb(19, 25, 33);
+    color: white;
+    padding-left: 15px;
+    padding-right: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+}
+
+.amazon-left-header-section {
+    width: 180px;
+}
+
+@media (max-width: 800px) {
+    .amazon-left-header-section {
+        width: unset;
+    }
+}
+
+.amazon-logo-mobile {
+    display: none;
+}
