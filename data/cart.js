@@ -1,1 +1,41 @@
-export const cart = [];
+export const cart = [{
+    productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
+    quantity: 2,
+}, {
+    productId: '15b6fc6f-327a-4ec4-896f-486349e85a3d',
+    quantity: 1,
+}];
+
+export function updateCartQuantity(productId){
+    let cartQuantity = 0;
+
+    cart.forEach((item) => {
+        cartQuantity += item.quantity;
+    });
+
+    document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+
+    const addedMessage = document
+        .querySelector(`.js-added-to-cart-${productId}`);
+
+    addedMessage.classList.add('added-to-cart-visible');
+
+    // Check if there's a previous timeout for this
+    // product. If there is, we should stop it.
+
+    //debugger
+    const previousTimeoutId = addedMessageTimeouts[productId];
+    
+    if (previousTimeoutId) {
+        clearTimeout(previousTimeoutId);
+    }
+
+    const timeoutId = setTimeout(() => {
+        addedMessage.classList.remove('added-to-cart-visible');
+    }, 2000);
+
+    // Save the timeoutId for this product
+    // so we can stop it later if we need to.
+
+    addedMessageTimeouts[productId] = timeoutId;
+}
