@@ -1,10 +1,43 @@
-export let cart = [{
+const addedMessageTimeouts = {};
+
+export let cart = localStorage.getItem('cart');
+
+[{
     productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
     quantity: 2,
 }, {
     productId: '15b6fc6f-327a-4ec4-896f-486349e85a3d',
     quantity: 1,
 }];
+
+function saveToStorege() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+export function addCart(productId){
+    let matchingItem;
+
+    const selectionQuantity = Number(document
+            .querySelector(`.js-quantity-selector-${ productId }`).value);
+
+    cart.forEach((item) => {
+        if (productId === item.productId) {
+            matchingItem = item;
+        }
+    });
+
+    if (matchingItem) {
+        matchingItem.quantity += selectionQuantity;
+    } else {
+        cart.push({
+        productId: productId,
+        quantity: selectionQuantity
+        });
+
+        saveToStorege();
+    }
+}
+
 
 export function updateCartQuantity(productId){
     let cartQuantity = 0;
@@ -38,6 +71,8 @@ export function updateCartQuantity(productId){
     // so we can stop it later if we need to.
 
     addedMessageTimeouts[productId] = timeoutId;
+
+    saveToStorege();
 }
 
 export function removeFromCart(productId) {
@@ -50,4 +85,6 @@ export function removeFromCart(productId) {
     });
 
     cart = newCart;
+
+    saveToStorege();
 }

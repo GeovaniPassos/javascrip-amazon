@@ -1,4 +1,4 @@
-import { cart, updateCartQuantity } from '../data/cart.js';
+import { addCart, updateCartQuantity } from '../data/cart.js';
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 
@@ -71,31 +71,6 @@ document.querySelector('.js-products-grid').innerHTML = productsHTML;
 //   ...
 // }
 // (2 and 5 are ids that are returned when we call setTimeout).
-const addedMessageTimeouts = {};
-
-function addCart(productId){
-    let matchingItem;
-
-    const selectionQuantity = Number(document
-            .querySelector(`.js-quantity-selector-${ productId }`).value);
-
-    cart.forEach((item) => {
-        if (productId === item.productId) {
-            matchingItem = item;
-        }
-    });
-
-    if (matchingItem) {
-        matchingItem.quantity += selectionQuantity;
-    } else {
-        cart.push({
-        productId: productId,
-        quantity: selectionQuantity
-        });
-    }
-
-}
-
 
 
 document.querySelectorAll('.js-add-to-cart')
