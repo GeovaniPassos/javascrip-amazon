@@ -46,8 +46,8 @@ function updateCardHeader() {
     let totalItensCart = 0;
     if (cart){
         totalItensCart = cart.reduce((sum, product) => sum + product.quantity, 0);
-   }
-   
+    }
+
    document.querySelector('.js-cart-quantity').innerHTML = totalItensCart;
 }
 

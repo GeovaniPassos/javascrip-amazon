@@ -105,11 +105,14 @@ document.querySelectorAll('.js-delete-link')
         link.addEventListener('click', () => {
             const productId = link.dataset.productId;
             removeFromCart(productId);
-
+            itensCard();
             const container = document.querySelector(
                 `.js-cart-item-container-${productId}`);
                 container.remove();
-            });
+                itensCard();
+            }); 
+
+            itensCard();
     });
 
 document.querySelectorAll('.js-update-link')
@@ -119,6 +122,6 @@ document.querySelectorAll('.js-update-link')
     });
 
 
-
-
-
+function itensCard() {
+    return document.querySelector('.js-quantity-itens').innerHTML = `${cart.reduce((sum, product) => sum + product.quantity, 0)} itens`;
+}
