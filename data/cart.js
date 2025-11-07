@@ -42,13 +42,13 @@ export function addCart(productId){
     }
 }
 
-function updateCardHeader() {
+export function updateCardHeader() {
     let totalItensCart = 0;
     if (cart){
         totalItensCart = cart.reduce((sum, product) => sum + product.quantity, 0);
+        totalItensCart != 0 ?  totalItensCart : totalItensCart = '';
+        document.querySelector('.js-cart-quantity').innerHTML = totalItensCart;
     }
-
-   document.querySelector('.js-cart-quantity').innerHTML = totalItensCart;
 }
 
 export function updateCartQuantity(productId){
@@ -68,7 +68,6 @@ export function updateCartQuantity(productId){
     // Check if there's a previous timeout for this
     // product. If there is, we should stop it.
 
-    //debugger
     const previousTimeoutId = addedMessageTimeouts[productId];
     
     if (previousTimeoutId) {

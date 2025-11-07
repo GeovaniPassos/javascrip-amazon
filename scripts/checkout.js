@@ -40,9 +40,13 @@ cart.forEach((cartItem) => {
                         Quantity: <span class="quantity-label">${cartItem.quantity}</span>
                         </span>
                         <span class="update-quantity-link link-primary 
-                        js-update-link">
+                        js-update-link" data-product-id="${matchingProduct.id}">
                         Update
                         </span>
+                        <input class="quantity-input">
+                        <span class="save-quantity-link js-save-quantity-link link-primary
+                        data-product-id="${matchingProduct.id}">
+                        Save</span>
                         <span class="delete-quantity-link link-primary 
                         js-delete-link" data-product-id="${matchingProduct.id}">
                         Delete
@@ -115,11 +119,27 @@ document.querySelectorAll('.js-delete-link')
             itensCard();
     });
 
+document.querySelectorAll('.js-save-quantity-link')
+    .forEach((link) => {
+        link.addEventListener('click', () => {
+            const productId = link.dataset.productId;
+            const matchingProductClass = document.querySelector(`.js-cart-item-container-${productId}`);
+            console.log(productId);
+            matchingProductClass.classList.remove('is-editing-quantity');
+            //TODO: Ajustar o botão de salvar a quantidade
+        });
+    });
+
 document.querySelectorAll('.js-update-link')
     .forEach((link) => {
         link.addEventListener('click', () => {
+            const productId = link.dataset.productId;
+            const matchingProductClass = document.querySelector(`.js-cart-item-container-${productId}`);
+            matchingProductClass.classList.add('is-editing-quantity');
         });
+        
     });
+
 
 
 function itensCard() {

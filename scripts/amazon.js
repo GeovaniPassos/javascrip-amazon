@@ -1,8 +1,10 @@
-import { addCart, updateCartQuantity } from '../data/cart.js';
+import { addCart, updateCartQuantity, updateCardHeader } from '../data/cart.js';
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 
 let productsHTML = '';
+
+updateCardHeader();
 
 products.forEach((product) => {
     productsHTML += `
