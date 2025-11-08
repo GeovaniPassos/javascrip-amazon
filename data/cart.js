@@ -2,6 +2,10 @@ const addedMessageTimeouts = {};
 
 export let cart = JSON.parse(localStorage.getItem('cart'));
 
+if (!cart) {
+    cart = [];
+}
+
 /*
 if (!cart) {
     cart = [{
@@ -98,4 +102,13 @@ export function removeFromCart(productId) {
     cart = newCart;
 
     saveToStorege();
+}
+
+export function updateQuantity(productId, newQuantity){
+    cart.forEach((item) => {
+        if (item.productId === productId) {
+            item.quantity = newQuantity;
+            saveToStorege();
+        }
+    });
 }
