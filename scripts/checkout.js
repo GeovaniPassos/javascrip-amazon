@@ -44,7 +44,8 @@ cart.forEach((cartItem) => {
                         Update
                         </span>
                         <input class="quantity-input js-input-quantity-id-${matchingProduct.id}"
-                            type="number" min="1" max="1000">
+                            type="numeric" inputmode="numeric"
+                            min="1" max="999" required>
                         <span class="save-quantity-link js-save-quantity-link link-primary"
                             data-product-id="${matchingProduct.id}">
                         Save</span>
@@ -127,13 +128,17 @@ document.querySelectorAll('.js-save-quantity-link')
             const productId = link.dataset.productId;
             const marchingClass = document.querySelector(`.js-cart-item-container-${productId}`);
             const quantityInput = Number(document.querySelector(`.js-input-quantity-id-${productId}`).value);
-            debugger;
-            updateQuantity(productId, quantityInput);
-
+            
+            if (quantityInput > 0 && quantityInput < 1000) {
+                updateQuantity(productId, quantityInput);
+            } else {
+                window.alert("Valor inválido!");
+            }
+            
             cart.forEach((item) => {
-                if (item.id === productId) {
-                    console.log(item.id, item.quantity);
-                    document.querySelector(`.js-quantity-label-${productId}`).innerHTML = item.quantity.value;
+                if (item.productId === productId) {
+                    console.log(item.productId, item.quantity);
+                    document.querySelector(`.js-quantity-label-${productId}`).innerHTML = item.quantity;
                 }
             });
             
@@ -150,10 +155,18 @@ document.querySelectorAll('.js-update-link')
             const matchingProductClass = document.querySelector(`.js-cart-item-container-${productId}`);
             matchingProductClass.classList.add('is-editing-quantity');
         });
-        
     });
+
+document.querySelector('.quantity-input')
+        .addEventListener('keydown', function(event) {
+            if (event.which == 13) {
+                document.querySelector('.js-save-quantity-link').click();
+            }
+        });
 
 function itensCard() {
     return document.querySelector('.js-quantity-itens').innerHTML = `${cart.reduce((sum, product) => sum + product.quantity, 0)} itens`;
 }
+
+
 
