@@ -6,18 +6,6 @@ if (!cart) {
     cart = [];
 }
 
-/*
-if (!cart) {
-    cart = [{
-        productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
-        quantity: 2,
-    }, {
-        productId: '15b6fc6f-327a-4ec4-896f-486349e85a3d',
-        quantity: 1,
-    }];
-}*/
-
-
 function saveToStorege() {
     localStorage.setItem('cart', JSON.stringify(cart));
 }
@@ -69,9 +57,6 @@ export function updateCartQuantity(productId){
 
     addedMessage.classList.add('added-to-cart-visible');
 
-    // Check if there's a previous timeout for this
-    // product. If there is, we should stop it.
-
     const previousTimeoutId = addedMessageTimeouts[productId];
     
     if (previousTimeoutId) {
@@ -81,9 +66,6 @@ export function updateCartQuantity(productId){
     const timeoutId = setTimeout(() => {
         addedMessage.classList.remove('added-to-cart-visible');
     }, 2000);
-
-    // Save the timeoutId for this product
-    // so we can stop it later if we need to.
 
     addedMessageTimeouts[productId] = timeoutId;
 

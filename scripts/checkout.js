@@ -16,7 +16,6 @@ cart.forEach((cartItem) => {
         }
     });
 
-
     cartSummaryHTML += `
         <div class="cart-item-container js-cart-item-container-${matchingProduct.id}
             js-cart-container-${matchingProduct.id}">
@@ -124,7 +123,6 @@ document.querySelectorAll('.js-delete-link')
 document.querySelectorAll('.js-save-quantity-link')
     .forEach((link) => {
         link.addEventListener('click', () => {
-
             const productId = link.dataset.productId;
             const marchingClass = document.querySelector(`.js-cart-item-container-${productId}`);
             const quantityInput = Number(document.querySelector(`.js-input-quantity-id-${productId}`).value);
@@ -137,7 +135,6 @@ document.querySelectorAll('.js-save-quantity-link')
             
             cart.forEach((item) => {
                 if (item.productId === productId) {
-                    console.log(item.productId, item.quantity);
                     document.querySelector(`.js-quantity-label-${productId}`).innerHTML = item.quantity;
                 }
             });
@@ -167,6 +164,3 @@ document.querySelector('.quantity-input')
 function itensCard() {
     return document.querySelector('.js-quantity-itens').innerHTML = `${cart.reduce((sum, product) => sum + product.quantity, 0)} itens`;
 }
-
-
-
