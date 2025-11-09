@@ -127,10 +127,16 @@ document.querySelectorAll('.js-save-quantity-link')
             const productId = link.dataset.productId;
             const marchingClass = document.querySelector(`.js-cart-item-container-${productId}`);
             const quantityInput = Number(document.querySelector(`.js-input-quantity-id-${productId}`).value);
-            
+            debugger;
             updateQuantity(productId, quantityInput);
+
+            cart.forEach((item) => {
+                if (item.id === productId) {
+                    console.log(item.id, item.quantity);
+                    document.querySelector(`.js-quantity-label-${productId}`).innerHTML = item.quantity.value;
+                }
+            });
             
-            const nameInput = document.querySelector(`.js-quantity-label-${productId}`).innerHTML = quantityInput;
             itensCard();
 
             marchingClass.classList.remove('is-editing-quantity');
