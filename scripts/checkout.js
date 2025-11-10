@@ -162,5 +162,8 @@ document.querySelector('.quantity-input')
         });
 
 function itensCard() {
-    return document.querySelector('.js-quantity-itens').innerHTML = `${cart.reduce((sum, product) => sum + product.quantity, 0)} itens`;
+    const quantity = cart.reduce((sum, product) => sum + product.quantity, 0);
+    document.querySelector('.js-quantity-itens').innerHTML = `${quantity} itens`;
+    document.querySelector('.js-quantity-itens-row').innerHTML = `items (${quantity}):`;
+    
 }
