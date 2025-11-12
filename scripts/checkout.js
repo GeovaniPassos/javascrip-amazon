@@ -60,6 +60,7 @@ cart.forEach((cartItem) => {
                     <div class="delivery-options-title">
                         Choose a delivery option:
                     </div>
+                    ${deliveryOptionsHTML(matchingProduct)}
                 </div>
             </div>
         </div>
@@ -67,30 +68,35 @@ cart.forEach((cartItem) => {
 
 });
 
-function deliveryOptionsHTML() {
+
+function deliveryOptionsHTML(matchingProduct) {
+    let html = '';
     deliveryOptions.forEach((deliveryOption) => {
         const today = dayjs();
-        const deliveryDate = today.add(deliveryOption.deliveryDays, 'days');
+        const deliveryDate = today.add(deliveryOption.days, 'days');
         const dateString = deliveryDate.format('dddd, MMMM D');
 
-        const priceString = '';
+        const priceString = deliveryOption.priceCents === 0 ? 
+                'FREE' : `$${formatCurrency(deliveryOption.priceCents)}`;
 
-        `
+        html += `
         <div class="delivery-option">
             <input type="radio"
             class="delivery-option-input"
             name="delivery-option-${matchingProduct.id}">
             <div>
                 <div class="delivery-option-date">
-                    ${todayString}
+                    ${dateString}
                 </div>
                 <div class="delivery-option-price">
-                    $9.99 - Shipping
+                    ${priceString} Shipping
                 </div>
             </div>
         </div>
-        `
+        `;
+
     });
+    return html;
 }
 
 document.querySelector('.js-order-summary').innerHTML = cartSummaryHTML;
