@@ -29,7 +29,6 @@ cart.forEach((cartItem) => {
     const today = dayjs();
     const deliveryDate = today.add(deliveryOption.days,'days');
     const dateString = deliveryDate.format('dddd, MMMM D');
-    console.log(deliveryOptions.deliveryDays)
 
     cartSummaryHTML += `
         <div class="cart-item-container js-cart-item-container-${matchingProduct.id}
@@ -89,7 +88,6 @@ function deliveryOptionsHTML(matchingProduct, cartItem) {
         const today = dayjs();
         const deliveryDate = today.add(deliveryOption.days,'days');
         const dateString = deliveryDate.format('dddd, MMMM D');
-        console.log(dateString)
 
         const priceString = deliveryOption.priceCents === 0 ? 
                 'FREE' : `$${formatCurrency(deliveryOption.priceCents)}`;

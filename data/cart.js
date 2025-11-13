@@ -97,3 +97,7 @@ export function updateQuantity(productId, newQuantity){
         }
     });
 }
+
+function updateDeliveryOption(productId, deliveryOptionId) {
+    
+}
