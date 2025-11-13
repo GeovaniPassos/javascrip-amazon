@@ -17,19 +17,19 @@ cart.forEach((cartItem) => {
             matchingProduct = product;
         }
     });
-
-        const deliveryOptionId = cartItem.deliveryOptionId;
-
     let deliveryOption;
 
+    const deliveryOptionId = cartItem.deliveryOptionId;
+    
     deliveryOptions.forEach((option) => {
         if (option.id === deliveryOptionId) {
             deliveryOption = option;
         }
     });
     const today = dayjs();
-    const deliveryDate = today.add(deliveryOption.deliveryDays,'days');
+    const deliveryDate = today.add(deliveryOption.days,'days');
     const dateString = deliveryDate.format('dddd, MMMM D');
+    console.log(deliveryOptions.deliveryDays)
 
     cartSummaryHTML += `
         <div class="cart-item-container js-cart-item-container-${matchingProduct.id}
@@ -87,8 +87,9 @@ function deliveryOptionsHTML(matchingProduct, cartItem) {
 
     deliveryOptions.forEach((deliveryOption) => {
         const today = dayjs();
-        const deliveryDate = today.add(deliveryOption.deliveryDays,'days');
+        const deliveryDate = today.add(deliveryOption.days,'days');
         const dateString = deliveryDate.format('dddd, MMMM D');
+        console.log(dateString)
 
         const priceString = deliveryOption.priceCents === 0 ? 
                 'FREE' : `$${formatCurrency(deliveryOption.priceCents)}`;

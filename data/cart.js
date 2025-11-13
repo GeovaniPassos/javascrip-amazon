@@ -1,3 +1,4 @@
+
 const addedMessageTimeouts = {};
 
 export let cart = JSON.parse(localStorage.getItem('cart'));
@@ -27,7 +28,8 @@ export function addCart(productId){
     } else {
         cart.push({
         productId: productId,
-        quantity: selectionQuantity
+        quantity: selectionQuantity,
+        deliveryOptionId: '1'
         });
 
         saveToStorege();
