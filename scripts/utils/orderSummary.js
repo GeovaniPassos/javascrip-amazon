@@ -17,16 +17,12 @@ export function renderOrderSummary() {
         
         const deliveryOptionId = cartItem.deliveryOptionId;
 
-        const deliveryOption = getDeliveryOption(deliveryOptionId);
-        
-        const today = dayjs();
-        const deliveryDate = today.add(deliveryOption.days,'days');
-        const dateString = deliveryDate.format('dddd, MMMM D');
+        const dateString = getDateString(deliveryOptionId);
 
         cartSummaryHTML += `
             <div class="cart-item-container js-cart-item-container-${matchingProduct.id}
                 js-cart-container-${matchingProduct.id}">
-                <div class="delivery-date">
+                <div class="delivery-date js-delivery-date-${matchingProduct.id}">
                     Delivery date: ${dateString}
                 </div>
 
@@ -91,17 +87,20 @@ export function renderOrderSummary() {
             <div class="delivery-option js-delivery-option"
                 data-product-id="${matchingProduct.id}"
                 data-delivery-option-id="${deliveryOption.id}">
+
                 <input type="radio" ${isChecked ? 'checked' : ''}
                 class="delivery-option-input" 
-                name="delivery-option-${matchingProduct.id}">
-                <div>
+                name="delivery-option-${matchingProduct.id}"
+                id="delivery-option-${matchingProduct.id}-${deliveryOption.id}">
+
+                <label for="delivery-option-${matchingProduct.id}-${deliveryOption.id}">
                     <div class="delivery-option-date">
                         ${dateString}
                     </div>
                     <div class="delivery-option-price">
                         ${priceString} Shipping
                     </div>
-                </div>
+                </label>
             </div>
             `;
         });
@@ -181,10 +180,18 @@ export function renderOrderSummary() {
             element.addEventListener('click', () => {
                 const {productId, deliveryOptionId} = element.dataset;
                 updateDeliveryOption(productId, deliveryOptionId);
+                document.querySelector(`.js-delivery-date-${productId}`).innerHTML = `Delivery date: ${getDateString(deliveryOptionId)}`;
                 renderPaymentSummary();
             })
         });
     
+    
+    function getDateString(deliveryOption){
+        const today = dayjs();
+        const deliveryDate = today.add(deliveryOption,'days');
+        const dateString = deliveryDate.format('dddd, MMMM D');
+        return dateString;
 
+    }
 }   
 
