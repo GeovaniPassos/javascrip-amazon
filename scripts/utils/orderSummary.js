@@ -4,6 +4,7 @@ import { formatCurrency } from '../utils/money.js';
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 import { deliveryOptions, getDeliveryOption } from '../../data/deliveryOptions.js';
 import { renderPaymentSummary } from './paymentSummary.js';
+import { renderCheckoutHeader } from './checkoutHeader.js';
 
 export function renderOrderSummary() {
 
@@ -66,7 +67,7 @@ export function renderOrderSummary() {
                 </div>
             </div>
         `;
-
+        
     });
 
 
@@ -114,16 +115,13 @@ export function renderOrderSummary() {
             link.addEventListener('click', () => {
                 const productId = link.dataset.productId;
                 removeFromCart(productId);
-                itensCard();
+
                 const container = document.querySelector(
                     `.js-cart-item-container-${productId}`);
                     container.remove();
-                    itensCard();
+                    renderCheckoutHeader();
                     renderPaymentSummary();
                     }); 
-                renderPaymentSummary();
-                itensCard();
-                
         });
 
     document.querySelectorAll('.js-save-quantity-link')
@@ -145,7 +143,7 @@ export function renderOrderSummary() {
                     }
                 });
                 
-                itensCard();
+                renderCheckoutHeader();
 
                 marchingClass.classList.remove('is-editing-quantity');
                 renderPaymentSummary();
@@ -168,12 +166,7 @@ export function renderOrderSummary() {
                 }
             });
 
-    function itensCard() {
-        const quantity = cart.reduce((sum, product) => sum + product.quantity, 0);
-        document.querySelector('.js-quantity-itens').innerHTML = `${quantity} itens`;
-        //document.querySelector('.js-quantity-itens-row').innerHTML = `items (${quantity}):`;
-        
-    }
+    
 
     document.querySelectorAll('.js-delivery-option')
         .forEach((element) => {
@@ -193,5 +186,7 @@ export function renderOrderSummary() {
         return dateString;
 
     }
+
+    renderCheckoutHeader();
 }   
 
