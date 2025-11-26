@@ -17,8 +17,8 @@ export function renderOrderSummary() {
         const matchingProduct = getProduct(productId);
         
         const deliveryOptionId = cartItem.deliveryOptionId;
-
-        const dateString = getDateString(deliveryOptionId);
+        //console.log(getDeliveryOption(deliveryOptionId));
+        const dateString = getDateString(getDeliveryOption(deliveryOptionId));
 
         cartSummaryHTML += `
             <div class="cart-item-container js-cart-item-container-${matchingProduct.id}
@@ -75,14 +75,15 @@ export function renderOrderSummary() {
         let html = '';
 
         deliveryOptions.forEach((deliveryOption) => {
-            const today = dayjs();
-            const deliveryDate = today.add(deliveryOption.days,'days');
-            const dateString = deliveryDate.format('dddd, MMMM D');
 
+            const dateString = getDateString(deliveryOption.id);
+            
             const priceString = deliveryOption.priceCents === 0 ? 
                     'FREE' : `$${formatCurrency(deliveryOption.priceCents)}`;
 
             const isChecked = deliveryOption.id === cartItem.deliveryOptionId;
+        
+            //console.log(dateString);
 
             html += `
             <div class="delivery-option js-delivery-option"
@@ -180,13 +181,29 @@ export function renderOrderSummary() {
     
     
     function getDateString(deliveryOption){
-        const today = dayjs();
-        const deliveryDate = today.add(deliveryOption,'days');
+        const deliveryDate = calculateDeliveryDate(deliveryOption);
+        
         const dateString = deliveryDate.format('dddd, MMMM D');
-        return dateString;
 
+        return dateString;
     }
 
     renderCheckoutHeader();
+
+    function calculateDeliveryDate(deliveryOption) {
+        const today = dayjs();
+        let deliveryDay = today;
+        const dayWeek = today.format('dddd');
+        const days = deliveryOption.days;
+        if (dayWeek ===  'Friday' || dayWeek === 'Saturday') {
+            deliveryDay = deliveryDay.add(2 + days, 'days');
+        } else if (dayWeek === 'Sunday') {
+            deliveryDay = deliveryDay.add(1 + days, 'days');
+        }  else {
+            deliveryDay = deliveryDay.add(days, 'days')
+        }
+        console.log(deliveryDay);
+        return deliveryDay;
+    }
 }   
 

@@ -17,7 +17,25 @@ console.log(today.format('dddd'));
 */
 
 let today = dayjs();
-//today.add(1, 'days');
+today.add(1, 'days');
 
-isSatSum(today.add(5, 'days'));
+//isSatSum(today.add(5, 'days'));
+
+//console.log(today.add(1, 'days'), today.format('dddd'));
+
+let newday = isWeeked(today.add(3, 'days'));
+//console.log(newday.format('dddd'));
+//console.log(newday.format('dddd'));
+
+function isWeeked(day) {
+    const todayWeek = day.format('dddd');
+
+    if (todayWeek === 'Saturday') {
+        day = day.add(2, 'days');
+    } else if (todayWeek === 'Sunday') {
+        day = day.add(1, 'days');
+    }
+    
+    return day;
+}
 
