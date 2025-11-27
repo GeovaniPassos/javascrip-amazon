@@ -172,7 +172,7 @@ export function renderOrderSummary() {
             element.addEventListener('click', () => {
                 const {productId, deliveryOptionId} = element.dataset;
                 updateDeliveryOption(productId, deliveryOptionId);
-                document.querySelector(`.js-delivery-date-${productId}`).innerHTML = `Delivery date: ${getDateString(deliveryOptionId)}`;
+                document.querySelector(`.js-delivery-date-${productId}`).innerHTML = `Delivery date: ${getDateString(getDeliveryOption(deliveryOptionId))}`;
                 renderPaymentSummary();
             })
         });
@@ -189,23 +189,23 @@ export function renderOrderSummary() {
     renderCheckoutHeader();
 
     function calculateDeliveryDate(deliveryOption) {
-        let today = dayjs();
+    let today = dayjs();
 
-        today = today.add(2, 'days')
+    const daysDelivery = deliveryOption.days; // Dias úteis de entrega necessários
+    let deliveryDate = today.clone();        // Cria um clone para iterar, começando na data atual
+    let workDaysCount = 0;                   // Contador de dias úteis de entrega
+    
+    while (workDaysCount < daysDelivery) {
+        deliveryDate = deliveryDate.add(1, 'day');
         
-        let dayDelivery = today.add(deliveryOption.days, 'days');
-        console.log(dayDelivery.format('d'));
-
-        const dayNumberWeek = dayDelivery.format('d');
-        console.log(typeofdayNumberWeek === '5');
-
-        if (dayNumberWeek === '6' ) {
-            dayDelivery = dayDelivery.add(2, 'days');
-        } else if (dayNumberWeek === 0) {
-            dayDelivery = dayDelivery.add(3, 'days');
+        let dayOfWeek = deliveryDate.day(); 
+        
+        if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+            workDaysCount++;
         }
-
-        return dayDelivery;
     }
+    
+    return deliveryDate;
+}
 }   
 
