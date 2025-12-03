@@ -206,6 +206,5 @@ export function renderOrderSummary() {
     }
     
     return deliveryDate;
+    }       
 }
-}   
-
