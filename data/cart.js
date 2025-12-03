@@ -1,17 +1,23 @@
 
 const addedMessageTimeouts = {};
 
-export let cart = JSON.parse(localStorage.getItem('cart'));
+export let cart;
 
-if (!cart) {
-    cart = [];
+loadFromStorage();
+
+export function loadFromStorage() {
+    cart = JSON.parse(localStorage.getItem('cart'));
+
+    if (!cart) {
+        cart = [];
+    }
 }
 
 function saveToStorege() {
     localStorage.setItem('cart', JSON.stringify(cart));
 }
 
-export function addCart(productId){
+export function addToCart(productId){
     let matchingItem;
 
     const selectionQuantity = Number(document
