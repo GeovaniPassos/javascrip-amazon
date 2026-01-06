@@ -1,15 +1,14 @@
-
-const addedMessageTimeouts = {};
-
-const cart = {
-    cartItens: undefined,
+function Cart(localStorageKey) {
+    const addedMessageTimeouts = {};
+    const cart = {
+    cartItems: undefined,
     
     loadFromStorage() {
     
-    this.cartItens = JSON.parse(localStorage.getItem('cart-oop')) ;
+    this.cartItems = JSON.parse(localStorage.getItem('localStorageKey')) ;
 
-    if (!this.cartItens) {
-            this.cartItens = [{
+    if (!this.cartItems) {
+            this.cartItems = [{
                 productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
                 quantity: 2,
                 deliveryOptionsId: '1'
@@ -18,25 +17,25 @@ const cart = {
     },
 
     saveToStorege() {
-        localStorage.setItem('cart-oop', JSON.stringify(this.cartItens));
+        localStorage.setItem('localStorageKey', JSON.stringify(this.cartItems));
     },
  
     addToCart(productId){
         let matchingItem;
 
-        const selectionQuantity = Number(document
-                .querySelector(`.js-quantity-selector-${ productId }`).value);
+        const selectionQuantity = 1;
+        //Number(document.querySelector(`.js-quantity-selector-${ productId }`).value);
 
-        this.cartItens.forEach((item) => {
-            if (productId === item.productId) {
-                matchingItem = item;
+        this.cartItems.forEach((cartItem) => {
+            if (productId === cartItem.productId) {
+                matchingItem = cartItem;
             }
         });
 
         if (matchingItem) {
             matchingItem.quantity += selectionQuantity;
         } else {
-            this.cartItens.push({
+            this.cartItems.push({
             productId: productId,
             quantity: selectionQuantity,
             deliveryOptionId: '1'
@@ -49,7 +48,7 @@ const cart = {
     removeFromCart(productId) {
         const newCart = [];
 
-        this.cartItens.forEach((cartItem) => {
+        this.cartItems.forEach((cartItem) => {
             if (cartItem.productId !== productId) {
                 newCart.push(cartItem);
             }
@@ -63,7 +62,7 @@ const cart = {
     updateCartQuantity(productId){
         let cartQuantity = 0;
 
-        this.cartItens.forEach((item) => {
+        this.cartItems.forEach((item) => {
             cartQuantity += item.quantity;
         });
 
@@ -91,15 +90,15 @@ const cart = {
 
     updateCardHeader() {
         let totalItensCart = 0;
-        if (this.cartItens){
-            totalItensCart = this.cartItens.reduce((sum, product) => sum + product.quantity, 0);
+        if (this.cartItems){
+            totalItensCart = this.cartItems.reduce((sum, product) => sum + product.quantity, 0);
             totalItensCart != 0 ?  totalItensCart : totalItensCart = '';
             document.querySelector('.js-cart-quantity').innerHTML = totalItensCart;
         }
     },
 
     updateQuantity(productId, newQuantity){
-        this.cartItens.forEach((item) => {
+        this.cartItems.forEach((item) => {
             if (item.productId === productId) {
                 
                 item.quantity += newQuantity;
@@ -111,7 +110,7 @@ const cart = {
     updateDeliveryOption(productId, deliveryOptionId) {
         let matchingItem;
         
-        this.cartItens.forEach((cartItem) => {
+        this.cartItems.forEach((cartItem) => {
             if (productId === cartItem.productId) {
                 matchingItem = cartItem;
             }
@@ -122,8 +121,18 @@ const cart = {
         this.saveToStorege();
     }
 
-};
+    };
+
+    return cart;
+}
+
+const cart = Cart('cart-opp');
+const businessCart = Cart('cart-business');
+
 
 cart.loadFromStorage();
 
+businessCart.loadFromStorage();
+
 console.log(cart);
+console.log(businessCart);
